@@ -1,6 +1,6 @@
 @import "base_colors";
 
-$pale-yellow: #ffef60 !default;
+$pale-yellow: #ffef60;
 
 $primary: $pale-yellow !default;
 
@@ -8,3 +8,8 @@ $body-color:                $gray-100 !default;
 $body-bg:                   $gray-900 !default;
 $body-secondary-bg:         $gray-700 !default;
 $body-tertiary-bg:          $gray-800 !default;
+
+$dark-text-emphasis: $pale-yellow !default;
+
+//$nav-link-color:            $yellow-700 !default;
+//$nav-link-hover-color:      $yellow-300 !default;
