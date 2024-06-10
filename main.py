@@ -14,5 +14,9 @@ result = ''
 #conn = oracledb.connect(user="flaskserver", password="flask", dsn="localhost:1521/FREEPDB1")
 
 @app.route("/")
-def hello_world():
+def home():
     return render_template("index.html", name=myname)
+
+@app.route("/about")
+def about():
+    return render_template("about.html")

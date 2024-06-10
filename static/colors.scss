@@ -1,19 +1,17 @@
 @import "base_colors";
 
-$pale-yellow: #ffef60;
+$pale-yellow: #ffe555;
+$very-dark-gray: #18191a !default;
 
 $primary: $pale-yellow !default;
 
 $body-color:                $gray-100 !default;
-$body-bg:                   $gray-900 !default;
-$body-secondary-bg:         $gray-700 !default;
-$body-tertiary-bg:          $gray-800 !default;
+$body-bg:                   $black !default;
+$body-secondary-bg:         $gray-900 !default;
+$body-tertiary-bg:          $very-dark-gray !default;
 
 $dark-text-emphasis: $pale-yellow !default;
 
-$navbar-dark-color:                 rgba($pale-yellow, .55) !default;
-$navbar-dark-hover-color:           rgba($pale-yellow, .75) !default;
+$navbar-dark-color:                 rgba($pale-yellow, .65) !default;
+$navbar-dark-hover-color:           rgba($pale-yellow, .95) !default;
 $navbar-dark-active-color:          $pale-yellow !default;
-
-//$nav-link-color:            $yellow-700 !default;
-//$nav-link-hover-color:      $yellow-300 !default;
