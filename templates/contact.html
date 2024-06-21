@@ -1,0 +1,44 @@
+{% with page_title="contact" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="contact" %}
+{% include "navbar.html" %}
+{% endwith %}
+<div class="row $body-tertiary-bg border p-3 custom-gap">
+    <h1>      </h1>
+    <h3>Talk with our Team ..... </h3>
+    <h1>       </h1>
+    <div class="col-md-6">
+        <h2>Get in Touch</h2>
+    <div>
+        <form class="border:white">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control color:white" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" rows="3" placeholder="Enter your message"></textarea>
+            </div>
+            <h1>   </h1>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>Contact Information</h2>
+        <ul class="list-unstyled">
+            <li><strong>Address:</strong> 123 Main Street, Anytown, USA</li>
+            <li><strong>Phone:</strong> (123) 456-7890</li>
+            <li><strong>Email:</strong> contact@example.com</li>
+        </ul>
+    </div>
+</div>
+</div>
+
+{% include "footer.html" %}
