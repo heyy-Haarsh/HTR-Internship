@@ -5,9 +5,6 @@ from flask import request
 import oracledb
 
 app = Flask(__name__)
-
-myname = "Bob"
-
 result = ''
 
 # Uncomment to connect to database
@@ -15,8 +12,12 @@ result = ''
 
 @app.route("/")
 def home():
-    return render_template("index.html", name=myname)
+    return render_template("index.html")
 
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
