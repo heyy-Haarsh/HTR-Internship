@@ -1,0 +1,8 @@
+*** Inksight HTR Model(Intergrating the parts) ***
+
+---|Step - 1 : Setting up Virtual Environment|---
+
+1) Extract the contents into a folder 'inksight-htr'
+2) Open cmd and cd to that folder
+3) Run the command 'python -m venv .'
+4) Run 'Scripts\activate' to activate virtual environment
