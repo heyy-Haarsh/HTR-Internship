@@ -20,8 +20,12 @@ def about():
 def contact():
     return render_template("contact.html")
 
-@app.route("/login")
+@app.route("/login", methods =["GET", "POST"])
 def login():
+    if request.method == "POST":
+       # getting input with name = fname in HTML form
+       username = request.form.get("username")
+       return "Your name is "+username
     return render_template("login.html")
 
 @app.route("/signup")

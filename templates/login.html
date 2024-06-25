@@ -12,7 +12,7 @@
 			<img src="static/images/candle_4_5_golden.jpg" alt="Illustration" style="width: 100%" class="rounded-4">
 		</div>
 		<div class="col-sm-6 p-4 bg-body-secondary rounded-4">
-		<form class="d-grid gap-2 col-sm-8 mx-auto">
+		<form class="d-grid gap-2 col-sm-8 mx-auto" action="{{ url_for('login') }}" method="post">
 			<h4 class="display-4 text-center text-primary"><strong>Login</strong></h4>
 			<div class="lead text-center">
 				Don't have an account? <a href="/signup">Sign up!</a>
