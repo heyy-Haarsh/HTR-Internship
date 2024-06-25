@@ -12,13 +12,16 @@
 			<img src="static/images/candle_4_5_golden.jpg" alt="Illustration" style="width: 100%" class="rounded-4">
 		</div>
 		<div class="col-sm-6 p-4 bg-body-secondary rounded-4">
+		{% if exists %}
+		<div class="text-center lead">That username or email address is already taken!</div>
+		{% endif %}
 		<form class="d-grid gap-2 col-sm-8 mx-auto" action="{{ url_for('signup') }}" method="post">
 			<h4 class="display-4 text-center text-primary"><strong>Sign Up</strong></h4>
 			<div class="lead text-center">
 				Already have an account? <a href="/login">Login!</a>
 			</div>
 			<hr>
-            <label for="username">Email:</label>
+            <label for="email">Email:</label>
 			<input type="text" id="email" name="email" value=""><br>
 			<label for="username">Username:</label>
 			<input type="text" id="username" name="username" value=""><br>

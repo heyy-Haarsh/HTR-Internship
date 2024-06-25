@@ -1,13 +1,14 @@
-from flask import Flask, request, render_template, redirect
+from flask import Flask, request, render_template, redirect, url_for
 
 import oracledb
 
 app = Flask(__name__)
 result = ''
-username = ''
+loggedin_username = ''
 
 # Uncomment to connect to database
 conn = oracledb.connect(user="flaskserver", password="flask", dsn="localhost:1521/FREEPDB1")
+cursor = conn.cursor()
 
 @app.route("/")
 def home():
@@ -22,28 +23,47 @@ def contact():
     return render_template("contact.html")
 
 @app.route("/login", methods =["GET", "POST"])
-def login():
-    global username
+def login(message=None):
+    global loggedin_username
     if request.method == "POST":
        # getting input with name = fname in HTML form
        username = request.form.get("username")
+       password = request.form.get("password")
+       cursor.execute(f"SELECT * FROM users where usr_name='{username}' AND usr_passwordhash='{password}'")
+       result = cursor.fetchall()
+       if len(result) == 0:
+           render_template("login.html", message="Invalid login credentials!")
        return redirect("/profile")
     
-    return render_template("login.html")
+    return render_template("login.html", message=request.args.get('message'))
 
 @app.route("/signup", methods =["GET", "POST"])
 def signup():
-    global username
+    global loggedin_username
     if request.method == "POST":
        # getting input with name = fname in HTML form
        username = request.form.get("username")
-       return username
+       email = request.form.get("email")
+       password = request.form.get("password")
+       cursor.execute(f"SELECT * FROM users where usr_name='{username}' OR usr_email='{email}'")
+       result = cursor.fetchall()
+       if len(result) == 0:
+           cursor.callproc('create_user',
+                                [username, email, password])
+           conn.commit()
+           loggedin_username=username
+           return redirect("/profile")
+       else:
+            return render_template("signup.html", exists=True)
     
     return render_template("signup.html")
 
 @app.route("/profile")
 def profile():
-    return render_template("profile.html", username=username)
+    if loggedin_username=='':
+        return redirect(url_for('.login', message="Please login!"))
+        return redirect("/login", message="Please login!")
+    return render_template("profile.html", username=loggedin_username)
 
 @app.route("/plans")
 def plans():
