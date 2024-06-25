@@ -18,3 +18,12 @@ $dark-text-emphasis: $pale-yellow !default;
 $navbar-dark-color:                 rgba($pale-yellow, .65) !default;
 $navbar-dark-hover-color:           rgba($pale-yellow, .95) !default;
 $navbar-dark-active-color:          $pale-yellow !default;
+
+$input-bg:                              $white !default;
+$input-disabled-color:                  null !default;
+$input-disabled-bg:                     $gray-300 !default;
+$input-disabled-border-color:           null !default;
+
+$input-color:                           $gray-800 !default;
+$input-border-color:                    $gray-800 !default;
+$input-placeholder-color:               $gray-600 !default;
