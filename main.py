@@ -1,8 +1,6 @@
-from flask import Flask
-from flask import render_template
-from flask import request
+from flask import Flask, request, render_template
 
-import oracledb
+#import oracledb
 
 app = Flask(__name__)
 
@@ -20,3 +18,16 @@ def home():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@app.route("/plans")
+def plans():
+    return render_template("plans.html")
+

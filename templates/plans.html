@@ -1,0 +1,64 @@
+{% with page_title="Inksight" %}
+  {% include "header.html" %}
+{% endwith %}
+
+{% with page_name="plans" %}
+  {% include "navbar.html" %}
+{% endwith %}
+
+<div class="container-fluid p-4">
+  <div class="row m-2 rounded bg-body-tertiary" style="padding: 4px; height: 82vh;">
+
+    <h1 class="main-content" align="center" style="font-size:63px; margin-top: 8px;">Plans and Pricing</h1>
+
+    <div class="container-fluid bg-secondary text-white py-2 left-container" style="width: 25%; height: 64vh; position: fixed; left: 65px; margin-top: 108px;">
+      <div class="container">
+        <h1 class="display-4 text-primary" align="center"><b>Free Plan</b></h1>
+        <ul class="lead">
+          <li>Get 50 pages of handwriting converted into text per day.</li>
+          <li>15 days validity</li>
+          <li>Email support.</li>
+          <li>Standard accuracy.</li>
+          <li> Support for JPG, PNG files.</li>
+          <li>Standard processing time.</li>
+        </ul><br><br><br>
+        <button type="button" class="btn btn-dark btn-lg">Buy now</button>
+      </div>
+    </div>
+
+    <div class="container-fluid bg-secondary text-white py-2 center-container" style="width: 25%; height: 64vh; position: fixed; left: calc(50% - 12.5%); margin-top: 108px;">
+      <div class="container">
+        <h1 class="display-4 text-primary" align="center"><b>Standard Plan</b></h1>
+        <h2 class="text-primary" align="center">$14.99</h2>
+        <ul class="lead">
+          <li>Get 200 pages of handwriting converted into text per day.</li>
+          <li>30 days validity.</li>
+          <li>Priority email support.</li>
+          <li>High accuracy with machine learning improvements.</li>
+          <li>Support for JPG, PNG, PDF, TIFF, and BMP files.</li>
+        </ul>
+
+        <button type="button" class="btn btn-dark btn-lg">Buy now</button>
+      </div>
+    </div>
+
+    <div class="container-fluid bg-secondary text-white py-2 right-container" style="width: 25%; height: 64vh; position: fixed; right: 65px; margin-top: 108px;">
+      <div class="container">
+        <h1 class="display-4 text-primary" align="center"><b>Premium Plan</b></h1>
+        <h2 class="text-primary" align="center">$24.99</h2>
+        <ul class="lead">
+          <li>Get unlimited pages of handwriting converted into text per day.</li>
+          <li>30 days validity.</li>
+          <li>24/7 priority email and chat support.</li>
+          <li>Highest accuracy with advanced machine learning algorithms.</li>
+          <li>Export recognized text to DOCX, TXT, and CSV formats.</li>
+        </ul>
+
+        <button type="button" class="btn btn-dark btn-lg">Buy now</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% include "footer.html" %}
