@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% with page_title="Inksight" %}
   {% include "header.html" %}
 {% endwith %}
@@ -7,5 +8,41 @@
 {% endwith %}
 
 <h1>hell</h1>
+=======
+{% with page_title="signup" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="signup" %}
+{% include "navbar.html" %}
+{% endwith %}
+
+<div class="container-fluid p-1">
+	<div class="row m-2 p-2 rounded bg-body-tertiary">
+		<div class="col-sm-6">
+			<img src="static/images/candle_4_5_golden.jpg" alt="Illustration" style="width: 100%" class="rounded-4">
+		</div>
+		<div class="col-sm-6 p-4 bg-body-secondary rounded-4">
+		<form class="d-grid gap-2 col-sm-8 mx-auto">
+			<h4 class="display-4 text-center text-primary"><strong>Sign Up</strong></h4>
+			<div class="lead text-center">
+				Already have an account? <a href="/login">Login!</a>
+			</div>
+			<hr>
+            <label for="username">Email:</label>
+			<input type="text" id="email" name="email" value=""><br>
+			<label for="username">Username:</label>
+			<input type="text" id="username" name="username" value=""><br>
+			<label for="password">Password:</label>
+			<input type="password" id="password" name="password" value=""><br>
+			<hr>
+			<input type="submit" class="btn btn-primary" value="Sign Up">
+	
+		</form>
+		</div>
+	</div>
+</div>
+
+>>>>>>> ff153b6ae066cbdc30da5bd81f34af7239b16cb1
 
 {% include "footer.html" %}

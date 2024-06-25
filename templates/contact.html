@@ -1,0 +1,34 @@
+
+{% with page_title="contact" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="contact" %}
+{% include "navbar.html" %}
+{% endwith %}
+<div class="container-fluid p-1">
+    <div class="row m-2 p-2 rounded bg-body-tertiary">
+        <div class="col-sm-6 p-4 bg-body-secondary rounded-4">
+            <form class="d-grid gap-2 col-sm-8 mx-auto">
+                <h4 class="display-4 text-center text-primary"><strong>Contact Us</strong></h4>
+                <div class="lead text-center">
+                    Have any questions? We'd love to hear from you.
+                </div>
+                <hr>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value=""><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value=""><br>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4"></textarea><br>
+                <hr>
+                <input type="submit" class="btn btn-primary" value="Send Message">
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <img src="static\images\pikaso_texttoimage_35mm-film-photography-a-person-writing-a-handwritt.jpeg" alt="Illustration" style="width: 100%" class="rounded-4">
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}
