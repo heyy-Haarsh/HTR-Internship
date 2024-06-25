@@ -1,12 +1,13 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 
-#import oracledb
+import oracledb
 
 app = Flask(__name__)
 result = ''
+username = ''
 
 # Uncomment to connect to database
-#conn = oracledb.connect(user="flaskserver", password="flask", dsn="localhost:1521/FREEPDB1")
+conn = oracledb.connect(user="flaskserver", password="flask", dsn="localhost:1521/FREEPDB1")
 
 @app.route("/")
 def home():
@@ -22,17 +23,27 @@ def contact():
 
 @app.route("/login", methods =["GET", "POST"])
 def login():
+    global username
     if request.method == "POST":
        # getting input with name = fname in HTML form
        username = request.form.get("username")
-       return "Your name is "+username
+       return redirect("/profile")
+    
     return render_template("login.html")
 
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
 
+@app.route("/profile")
+def profile():
+    return render_template("profile.html", username=username)
+
 @app.route("/plans")
 def plans():
     return render_template("plans.html")
+
+@app.route("/convert")
+def convert():
+    return render_template("convert.html")
 

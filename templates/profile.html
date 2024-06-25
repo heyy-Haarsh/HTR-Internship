@@ -1,0 +1,13 @@
+{% with page_title="Inksight" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="home" %}
+{% include "navbar.html" %}
+{% endwith %}
+
+<div class="container-fluid p-4">
+	Hello, {{username}}
+</div>
+
+{% include "footer.html" %}

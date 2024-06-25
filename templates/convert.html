@@ -1,0 +1,25 @@
+{% with page_title="Inksight" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="home" %}
+{% include "navbar.html" %}
+{% endwith %}
+
+<div class="container-fluid p-4">
+	<h1 class="display-5 text-center">Convert images of handwriting to text</h1>
+	<div class="row m-2 p-3 rounded bg-body-tertiary">
+		<div class="col-sm-6">
+		  <label for="formFile" class="form-label">Default file input example</label>
+		  <input class="form-control" type="file" id="formFile">
+		  <button class="btn btn-primary btn-lg">Convert</button>
+		</div>
+		<div class="col-sm-6 p-3">
+			<div class="bg-white text-black rounded p-2">
+			Batata kha re
+			</div>
+		</div>
+	</div>
+</div>
+
+{% include "footer.html" %}
