@@ -15,6 +15,11 @@
     .card-body {
         flex: 1;
     }
+    
+    /* Adjust the max-width of the profile picture */
+    .profile-picture {
+        max-width: 200px; /* Adjust the size as per your preference */
+    }
 </style>
 
 <div class="container mt-5">
@@ -28,7 +33,7 @@
                     <h3>Update Profile Picture</h3>
                 </div>
                 <div class="card-body text-center">
-                    <img src="https://i.pinimg.com/474x/65/25/a0/6525a08f1df98a2e3a545fe2ace4be47.jpg" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                    <img src="https://i.pinimg.com/474x/65/25/a0/6525a08f1df98a2e3a545fe2ace4be47.jpg" alt="Profile Picture" class="img-fluid rounded-circle mb-3 profile-picture">
                     <form action="/change_pfp" method="POST" enctype="multipart/form-data">
                         <div class="form-group my-3">
                             <label for="pfp">Choose new profile picture:</label>
