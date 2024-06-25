@@ -31,8 +31,14 @@ def login():
     
     return render_template("login.html")
 
-@app.route("/signup")
+@app.route("/signup", methods =["GET", "POST"])
 def signup():
+    global username
+    if request.method == "POST":
+       # getting input with name = fname in HTML form
+       username = request.form.get("username")
+       return username
+    
     return render_template("signup.html")
 
 @app.route("/profile")
