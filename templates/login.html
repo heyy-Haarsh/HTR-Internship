@@ -1,51 +1,3 @@
-<<<<<<< HEAD
-{% with page_title="Inksight" %}
-  {% include "header.html" %}
-{% endwith %}
-
-{% with page_name="login" %}
-  {% include "navbar.html" %}
-{% endwith %}
-
-<div class="container-fluid p-4">
-	<div class="row m-2 rounded bg-body-tertiary" style="padding-bottom: 20px;">
-        <h1 align="center" style="font-size:60px" style="margin-top: 15px;">Login</h1>	
-        <form>
-            <img src="C:\Users\abhis\OneDrive\Documents\GitHub\HTR-Internship\static\images\AdobeStock_215123311-1-640x396.jpg" align="right" style="margin: 30px 10px;">
-
-            <div class="form-group" style="margin: 30px 10px;">
-                <label for="exampleInputEmail1" style="font-size:30px" >Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="abc@xyz.com" style="max-width: 50%; padding: 12px 20px;">
-            </div>
-            <div class="form-group" style="margin: 30px 10px;">
-              <label for="exampleInputPassword1" style="font-size:30px" >Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" style="max-width: 50%; padding: 12px 20px;">
-            </div>
-            <div class="form-group form-check">
-              <input type="checkbox" class="form-check-input" id="exampleCheck1" onclick="togglePassword()">
-              <label class="form-check-label" for="exampleCheck1">See Password</label>
-              <p align="center">Forgot Password?</p>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-</div>
-
-{% include "footer.html" %}
-
-<script>
-function togglePassword() {
-    var passwordField = document.getElementById("exampleInputPassword1");
-    var checkbox = document.getElementById("exampleCheck1");
-
-    if (checkbox.checked) {
-        passwordField.type = "text";
-    } else {
-        passwordField.type = "password";
-    }
-}
-</script>
-=======
 {% with page_title="Login" %}
 {% include "header.html" %}
 {% endwith %}
@@ -79,4 +31,3 @@ function togglePassword() {
 </div>
 
 {% include "footer.html" %}
->>>>>>> ff153b6ae066cbdc30da5bd81f34af7239b16cb1
