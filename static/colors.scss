@@ -27,3 +27,9 @@ $input-disabled-border-color:           null !default;
 $input-color:                           $gray-800 !default;
 $input-border-color:                    $gray-800 !default;
 $input-placeholder-color:               $gray-600 !default;
+
+
+//$form-file-button-color:          $input-color !default;
+$form-file-button-color:          $white !default;
+$form-file-button-bg:             $body-secondary-bg !default;
+$form-file-button-hover-bg:       rgba($body-secondary-bg, .75) !default;

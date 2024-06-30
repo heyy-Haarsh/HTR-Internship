@@ -1,4 +1,7 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
+from werkzeug.utils import secure_filename
+import os
+
 
 import oracledb
 
@@ -69,7 +72,14 @@ def profile():
 def plans():
     return render_template("plans.html")
 
-@app.route("/convert")
+@app.route("/convert", methods =["GET", "POST"])
 def convert():
+    if request.method == 'POST':
+        file = request.files['file']
+        fname = secure_filename(file.filename)
+        file.save('static/user_uploads/' + fname)
+        # do the processing here and save the new file in static/
+        fname_after_processing = 'user_uploads/'+fname
+        return jsonify({'result_image_location': url_for('static', filename=fname_after_processing)})
     return render_template("convert.html")
 
