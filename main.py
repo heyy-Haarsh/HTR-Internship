@@ -35,7 +35,7 @@ def login(message=None):
        cursor.execute(f"SELECT * FROM users where usr_name='{username}' AND usr_passwordhash='{password}'")
        result = cursor.fetchall()
        if len(result) == 0:
-           render_template("login.html", message="Invalid login credentials!")
+           return render_template("login.html", message="Invalid login credentials!")
        return redirect("/profile")
     
     return render_template("login.html", message=request.args.get('message'))
@@ -70,7 +70,7 @@ def signup():
 def profile():
     if loggedin_username=='':
         return redirect(url_for('.login', message="Please login!"))
-        return redirect("/login", message="Please login!")
+        # return redirect("/login", message="Please login!")
     return render_template("profile.html", username=loggedin_username)
 
 @app.route("/plans")
@@ -88,3 +88,10 @@ def convert():
         return jsonify({'result_image_location': url_for('static', filename=fname_after_processing)})
     return render_template("convert.html")
 
+@app.route("/forgot")
+def forgot():
+    return render_template("forgot.html")
+
+@app.route("/OTP")
+def OTP():
+    return render_template("OTP.html")

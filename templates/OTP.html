@@ -1,0 +1,27 @@
+{% with page_title="OTP" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="OTP" %}
+{% include "navbar.html" %}
+{% endwith %}
+<div class="container-fluid p-1 full-height">
+    <div class="row m-2 p-2 rounded bg-body-tertiary full-height align-items-center justify-content-center " >
+        <div class="col-sm-6 p-4 bg-body-secondary rounded-4 ">
+            <form class="d-grid gap-2 col-sm-8 mx-auto" action="/verify-otp" method="POST">
+                <h4 class="display-4 text-center text-primary"><strong>Enter OTP</strong></h4>
+                <div class="lead text-center text-black">
+                    Didn't receive the OTP? <a href="/resend-otp" class="text-green">Resend OTP</a>
+                </div>
+                <hr>
+                <label for="otp">OTP:</label>
+                <input type="text" id="otp" name="otp" class="form-control" required>
+                <hr>
+                <input type="submit" class="btn btn-primary" value="Verify">
+            </form>
+        </div>
+        
+    </div>
+    
+</div>
+{% include "footer.html" %}
