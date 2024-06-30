@@ -21,10 +21,6 @@ from word_detector import detect, prepare_img, sort_multiline
 
 from inferenceModel import ImageToWordModel
 
-root = None
-img = None
-panel = None
-
 resized = None
 detection_img = None
 recognition_img = None
@@ -162,7 +158,17 @@ def main():
 
         
 def convert_to_text(fname):    
-    global output_text
+    global output_text, lines, lines_idx, word_idx, line, word_counter, word_img, ended
+
+    lines = []
+    lines_idx = -1
+    line = []
+    word_idx = -1
+
+    word_counter = 0
+    word_img = None
+
+    ended = False
     
     open_file(fname)      # Changed to accomodate only 1 page
     next_line()
@@ -180,6 +186,8 @@ def convert_to_text(fname):
         prediction_text = model.predict(img)
 
         output_text = output_text+prediction_text+' '
+
+    print('Output text:\n',output_text)
 
     return output_text
 
