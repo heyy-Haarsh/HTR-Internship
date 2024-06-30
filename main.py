@@ -60,8 +60,6 @@ def change_profile_photo(username, new_photo_path=None):
 
 @app.route("/")
 def home():
-    if session['logged_in']:
-        return redirect("/convert")
     return render_template("index.html")
 
 @app.route("/about")
@@ -181,9 +179,9 @@ def convert():
                 pass
             else: raise
 
-        file.save(folder + fname)
+        file.save(folder + '/' + fname)
         # do the processing here and save the new file in static/
-        img_filename = base_folder+fname
+        img_filename = base_folder + '/' + fname
         output_text = convert_to_text('static/'+img_filename)
         return jsonify({'result_image_location': url_for('static', filename=img_filename),
                         'output_text': output_text})
