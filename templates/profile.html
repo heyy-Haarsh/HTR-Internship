@@ -33,7 +33,7 @@
                     <h3>Update Profile Picture</h3>
                 </div>
                 <div class="card-body text-center">
-                    <img src="{{ profile_photo }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3 profile-picture">
+                    <img src="{{ session['profile_photo_url'] }}" alt="Profile Picture" class="img-thumbnail rounded-circle mb-3" id="profile-picture" style="width: 200px; height:200px">
                     <form id="updateProfileForm" action="/profile" method="POST" enctype="multipart/form-data">
                         <div class="form-group my-3">
                             <label for="pfp">Choose new profile picture:</label>
@@ -112,16 +112,19 @@
     </div>
 </div>
 
-{% include "footer.html" %}
-
 <script>
     // Function to preview the selected image
     function previewImage(event) {
         var reader = new FileReader();
         reader.onload = function(){
-            var output = document.querySelector('.profile-picture');
+            var output = document.getElementById('profile-picture');
             output.src = reader.result;
         }
         reader.readAsDataURL(event.target.files[0]);
+        var img = document.getElementById('profile-picture');
+        img.style.width = '200px';
+        img.style.height = '200px';
     }
 </script>
+
+{% include "footer.html" %}

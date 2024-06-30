@@ -1,4 +1,5 @@
 import argparse
+from PIL import Image
 from typing import List
 import cv2
 import matplotlib.pyplot as plt
@@ -141,3 +142,10 @@ def scan_img(img: np.ndarray):
 
 if __name__ == '__main__':
     main()
+
+def resize_img_square(path: str, length: int):
+    im = Image.open(path)
+    sqrWidth = np.ceil(np.sqrt(im.size[0]*im.size[1])).astype(int)
+    im_resize = im.resize((sqrWidth, sqrWidth))
+    print(path)
+    im_resize.save(path)
