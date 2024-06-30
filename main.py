@@ -1,4 +1,6 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, jsonify
+from werkzeug.utils import secure_filename
+import os
 
 import oracledb
 
@@ -32,7 +34,7 @@ def login(message=None):
        cursor.execute(f"SELECT * FROM users where usr_name='{username}' AND usr_passwordhash='{password}'")
        result = cursor.fetchall()
        if len(result) == 0:
-           render_template("login.html", message="Invalid login credentials!")
+           return render_template("login.html", message="Invalid login credentials!")
        return redirect("/profile")
     
     return render_template("login.html", message=request.args.get('message'))
@@ -62,15 +64,22 @@ def signup():
 def profile():
     if loggedin_username=='':
         return redirect(url_for('.login', message="Please login!"))
-        return redirect("/login", message="Please login!")
+        # return redirect("/login", message="Please login!")
     return render_template("profile.html", username=loggedin_username)
 
 @app.route("/plans")
 def plans():
     return render_template("plans.html")
 
-@app.route("/convert")
+@app.route("/convert", methods =["GET", "POST"])
 def convert():
+    if request.method == 'POST':
+        file = request.files['file']
+        fname = secure_filename(file.filename)
+        file.save('static/user_uploads/' + fname)
+        # do the processing here and save the new file in static/
+        fname_after_processing = 'user_uploads/'+fname
+        return jsonify({'result_image_location': url_for('static', filename=fname_after_processing)})
     return render_template("convert.html")
 
 @app.route("/forgot")

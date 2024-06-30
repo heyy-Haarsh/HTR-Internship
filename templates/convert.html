@@ -28,15 +28,33 @@
 				<div class="card">
 					<h2 class="text-center mb-4">Convert Images to Text</h2>
 					<div class="feature-line"></div>
-					<form action="/upload_image" method="POST" enctype="multipart/form-data">
+					<img id="upload_img" scr="">
+					<form name="fileupload" method="POST" enctype="multipart/form-data">
 						<div class="mb-3 text-center">
-							<label for="formFile" class="form-label">Upload an image of handwriting:</label>
-							<input class="form-control" type="file" id="formFile" name="image" accept="image/*" required>
+							<label for="file" class="form-label">Upload an image of handwriting:</label>
+							<input class="form-control" type="file" id="file" name="file" accept="image/*" required>
 						</div>
 						<div class="d-grid gap-2">
 							<button class="btn btn-primary btn-lg" type="submit">Convert to Text</button>
 						</div>
 					</form>
+					<script>
+						var form = document.forms.namedItem("fileupload");
+						form.addEventListener('submit', function(ev) {
+						  var oData = new FormData(form);
+						  var oReq = new XMLHttpRequest();
+						  oReq.open("POST", "{{url_for('convert')}}", true);
+						  oReq.onload = function(oEvent) {
+							if (oReq.status == 200) {
+							  document.getElementById('upload_img').setAttribute('src', JSON.parse(oReq.responseText).result_image_location);
+							} else {
+							  alert("Error " + oReq.status + " occurred when trying to upload your file")
+							}
+						  };
+						  oReq.send(oData);
+						  ev.preventDefault();
+						}, false);
+					</script>
 				</div>
 			</div>
 
