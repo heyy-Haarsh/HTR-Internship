@@ -1,0 +1,115 @@
+{% with page_title="profile" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="profile" %}
+{% include "navbar.html" %}
+{% endwith %}
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-body {
+        flex: 1;
+    }
+    
+    /* Adjust the max-width of the profile picture */
+    .profile-picture {
+        max-width: 200px; /* Adjust the size as per your preference */
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Update Profile</h2>
+
+    <div class="row">
+        <!-- Column for Update Profile Picture -->
+        <div class="col-md-6 mb-4">
+            <div class="card bg-secondary h-100">
+                <div class="card-header">
+                    <h3>Update Profile Picture</h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://i.pinimg.com/474x/65/25/a0/6525a08f1df98a2e3a545fe2ace4be47.jpg" alt="Profile Picture" class="img-fluid rounded-circle mb-3 profile-picture">
+                    <form action="/change_pfp" method="POST" enctype="multipart/form-data">
+                        <div class="form-group my-3">
+                            <label for="pfp">Choose new profile picture:</label>
+                            <input type="file" class="form-control-file" id="pfp" name="pfp" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Update Profile Picture</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Column for Username and Password -->
+        <div class="col-md-6 mb-4">
+            <div class="row h-100">
+                <!-- Change Username -->
+                <div class="col-md-12 mb-2">
+                    <div class="card bg-secondary h-100">
+                        <div class="card-header">
+                            <h3>Change Username</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="/change_username" method="POST">
+                                <div class="form-group">
+                                    <label for="new_username">New Username:</label>
+                                    <input type="text" class="form-control" id="new_username" name="new_username" style="max-width: 100%;" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block mb-3">Change Username</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="col-md-12">
+                    <div class="card bg-secondary h-100">
+                        <div class="card-header">
+                            <h3>Change Password</h3>
+                        </div>
+                        <div class="card-body">
+                            <form action="/change_password" method="POST">
+                                <div class="form-group">
+                                    <label for="old_password">Old Password:</label>
+                                    <input type="password" class="form-control" id="old_password" name="old_password" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_password">New Password:</label>
+                                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block mb-3">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Column for About -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card bg-secondary h-100">
+                <div class="card-header">
+                    <h3>Change About</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/change_about" method="POST">
+                        <div class="form-group">
+                            <label for="about">About:</label>
+                            <textarea class="form-control" id="about" name="about" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Change About</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}

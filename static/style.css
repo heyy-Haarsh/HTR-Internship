@@ -2167,8 +2167,8 @@ progress {
   padding: 0.375rem 0.75rem;
   margin: -0.375rem -0.75rem;
   margin-inline-end: 0.75rem;
-  color: #343a40;
-  background-color: var(--bs-tertiary-bg);
+  color: #fff;
+  background-color: #495057;
   pointer-events: none;
   border-color: inherit;
   border-style: solid;
@@ -2183,7 +2183,7 @@ progress {
   }
 }
 .form-control:hover:not(:disabled):not([readonly])::file-selector-button {
-  background-color: var(--bs-secondary-bg);
+  background-color: rgba(73, 80, 87, 0.75);
 }
 
 .form-control-plaintext {
