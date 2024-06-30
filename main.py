@@ -73,3 +73,10 @@ def plans():
 def convert():
     return render_template("convert.html")
 
+@app.route("/forgot")
+def forgot():
+    return render_template("forgot.html")
+
+@app.route("/OTP")
+def OTP():
+    return render_template("OTP.html")

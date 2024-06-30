@@ -1,0 +1,29 @@
+{% with page_title="forgot" %}
+{% include "header.html" %}
+{% endwith %}
+
+{% with page_name="forgot" %}
+{% include "navbar.html" %}
+{% endwith %}
+<div class="container-fluid p-1 full-height">
+    <div class="row m-2 p-2 rounded bg-body-tertiary full-height align-items-center">
+        <div class="col-sm-6">
+            <img src="https://png.pngtree.com/thumb_back/fh260/background/20220128/pngtree-tablet-login-inputting-username-and-password-forgot-access-member-photo-image_15795176.jpg" alt="Illustration" style="width: 100%" class="rounded-4">
+        </div>
+        <div class="col-sm-6 p-4 bg-body-secondary rounded-4">
+            <form class="d-grid gap-2 col-sm-8 mx-auto" action="/forgot-password" method="POST">
+                <h4 class="display-4 text-center text-primary"><strong>Forgot Password</strong></h4>
+                <div class="lead text-center">
+                    Remembered your password? <a href="/login">Login!</a>
+                </div>
+                <hr>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+                <hr>
+                <a class="btn btn-primary" href="/OTP" >Submit</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}
