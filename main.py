@@ -1,19 +1,49 @@
-from word_detection import convert_to_text
-
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, redirect, url_for, jsonify, flash
 from werkzeug.utils import secure_filename
 import os
-import re
+import shutil
+from word_detection import convert_to_text
 
+import re
 import oracledb
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'static/pfp'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+app.secret_key = 'supersecretkey'  # Replace with a real secret key
+
 result = ''
 loggedin_username = ''
 
 # Uncomment to connect to database
 conn = oracledb.connect(user="flaskserver", password="flask", dsn="localhost:1521/FREEPDB1")
 cursor = conn.cursor()
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+def change_profile_photo(username, new_photo_path=None):
+    # Define the path to the user's profile photo directory
+    user_dir = app.config['UPLOAD_FOLDER']
+    
+    # Ensure the user directory exists
+    os.makedirs(user_dir, exist_ok=True)
+    
+    # Define the path to the profile photo
+    profile_photo_name = f'{username}.jpg'
+    profile_photo_path = os.path.join(user_dir, profile_photo_name)
+    
+    # Path to the default profile photo
+    default_photo_path = os.path.join(user_dir, 'default_profile_photo.jpg')
+    
+    if new_photo_path:
+        # If a new photo is provided, copy it to the user's profile photo directory
+        shutil.copy(new_photo_path, profile_photo_path)
+    else:
+        # If no new photo is provided, use the default profile photo
+        shutil.copy(default_photo_path, profile_photo_path)
+
+
+
 
 @app.route("/")
 def home():
@@ -29,7 +59,7 @@ def about():
 def contact():
     return render_template("contact.html")
 
-@app.route("/login", methods =["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login(message=None):
     global loggedin_username
     if request.method == "POST":
@@ -70,13 +100,33 @@ def signup():
 
     return render_template("signup.html")
 
-
-@app.route("/profile")
+@app.route("/profile", methods=["GET", "POST"])
 def profile():
-    if loggedin_username=='':
+    global loggedin_username
+    if loggedin_username == '':
         return redirect(url_for('.login', message="Please login!"))
-        # return redirect("/login", message="Please login!")
-    return render_template("profile.html", username=loggedin_username)
+    
+    if request.method == "POST":
+        if 'pfp' in request.files:
+            file = request.files['pfp']
+            if file.filename == '':
+                flash('No selected file, setting default profile photo.')
+                change_profile_photo(loggedin_username)
+            elif file and allowed_file(file.filename):
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], f'{loggedin_username}.jpg')
+                file.save(file_path)
+                change_profile_photo(loggedin_username, file_path)
+                flash('Profile photo successfully updated')
+            else:
+                flash('Invalid file type. Please upload an image.')
+            return redirect(url_for('profile'))
+    
+    # Determine profile photo path
+    profile_photo_path = os.path.join(app.config['UPLOAD_FOLDER'], f'{loggedin_username}.jpg')
+    if not os.path.exists(profile_photo_path):
+        profile_photo_path = url_for('static', filename='pfp/default_profile_photo.jpg')  # Default profile photo path
+    
+    return render_template("profile.html", username=loggedin_username, profile_photo=profile_photo_path)
 
 @app.route("/plans")
 def plans():

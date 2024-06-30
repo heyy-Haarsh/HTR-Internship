@@ -1,4 +1,4 @@
-{% with page_title="profile" %}
+{% with page_title="Profile" %}
 {% include "header.html" %}
 {% endwith %}
 
@@ -33,11 +33,11 @@
                     <h3>Update Profile Picture</h3>
                 </div>
                 <div class="card-body text-center">
-                    <img src="https://i.pinimg.com/474x/65/25/a0/6525a08f1df98a2e3a545fe2ace4be47.jpg" alt="Profile Picture" class="img-fluid rounded-circle mb-3 profile-picture">
-                    <form action="/change_pfp" method="POST" enctype="multipart/form-data">
+                    <img src="{{ profile_photo }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3 profile-picture">
+                    <form id="updateProfileForm" action="/profile" method="POST" enctype="multipart/form-data">
                         <div class="form-group my-3">
                             <label for="pfp">Choose new profile picture:</label>
-                            <input type="file" class="form-control-file" id="pfp" name="pfp" accept="image/*" required>
+                            <input type="file" class="form-control-file" id="pfp" name="pfp" accept="image/*" required onchange="previewImage(event)">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block mb-3">Update Profile Picture</button>
                     </form>
@@ -113,3 +113,15 @@
 </div>
 
 {% include "footer.html" %}
+
+<script>
+    // Function to preview the selected image
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.querySelector('.profile-picture');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
