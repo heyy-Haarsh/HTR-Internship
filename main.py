@@ -1,3 +1,5 @@
+from word_detection import convert_to_text
+
 from flask import Flask, request, render_template, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 import os
@@ -78,8 +80,10 @@ def convert():
         fname = secure_filename(file.filename)
         file.save('static/user_uploads/' + fname)
         # do the processing here and save the new file in static/
-        fname_after_processing = 'user_uploads/'+fname
-        return jsonify({'result_image_location': url_for('static', filename=fname_after_processing)})
+        img_filename = 'user_uploads/'+fname
+        output_text = convert_to_text('static/'+img_filename)
+        return jsonify({'result_image_location': url_for('static', filename=img_filename),
+                        'output_text': output_text})
     return render_template("convert.html")
 
 @app.route("/forgot")

@@ -10,3 +10,4 @@ __pycache__/main.cpython-310.pyc
 Lib/site-packages/cryptography/hazmat/primitives/asymmetric/__pycache__/ed25519.cpython-310.pyc
 __pycache__/main.cpython-310.pyc
 /__pycache__
+word_detector/__pycache__/__init__.cpython-310.pyc
