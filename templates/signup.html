@@ -7,33 +7,49 @@
 {% endwith %}
 
 <div class="container-fluid p-1">
-	<div class="row m-2 p-2 rounded bg-body-tertiary">
-		<div class="col-sm-6">
-			<img src="static/images/candle_4_5_golden.jpg" alt="Illustration" style="width: 100%" class="rounded-4">
-		</div>
-		<div class="col-sm-6 p-4 bg-body-secondary rounded-4">
-		{% if exists %}
-		<div class="text-center lead">That username or email address is already taken!</div>
-		{% endif %}
-		<form class="d-grid gap-2 col-sm-8 mx-auto" action="{{ url_for('signup') }}" method="post">
-			<h4 class="display-4 text-center text-primary"><strong>Sign Up</strong></h4>
-			<div class="lead text-center">
-				Already have an account? <a href="/login">Login!</a>
-			</div>
-			<hr>
+    <div class="row m-2 p-2 rounded bg-body-tertiary">
+        <div class="col-sm-6">
+            <img src="{{ url_for('static', filename='images/candle_4_5_golden.jpg') }}" alt="Illustration" style="width: 100%" class="rounded-4">
+        </div>
+        <div class="col-sm-6 p-4 bg-body-secondary rounded-4">
+        {% if exists %}
+            <div class="text-center lead text-danger">That username or email address is already taken!</div>
+        {% elif invalid_username %}
+            <div class="text-center lead text-danger">Username can only contain letters, numbers, and underscores!</div>
+        {% endif %}
+        <form class="d-grid gap-2 col-sm-8 mx-auto" action="{{ url_for('signup') }}" method="post">
+            <h4 class="display-4 text-center text-primary"><strong>Sign Up</strong></h4>
+            <div class="lead text-center">
+                Already have an account? <a href="/login">Login!</a>
+            </div>
+            <hr>
             <label for="email">Email:</label>
-			<input type="text" id="email" name="email" value=""><br>
-			<label for="username">Username:</label>
-			<input type="text" id="username" name="username" value=""><br>
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" value=""><br>
-			<hr>
-			<input type="submit" class="btn btn-primary" value="Sign Up">
-	
-		</form>
-		</div>
-	</div>
+            <input type="text" id="email" name="email" value=""><br>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="" oninput="validateUsername()"><br>
+            <div id="username-warning" class="text-danger" style="display:none;">Username can only contain letters, numbers, and underscores!</div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value=""><br>
+            <hr>
+            <input type="submit" class="btn btn-primary" value="Sign Up">
+        </form>
+        </div>
+    </div>
 </div>
 
-
 {% include "footer.html" %}
+
+<script>
+function validateUsername() {
+    const usernameInput = document.getElementById('username');
+    const warningMessage = document.getElementById('username-warning');
+    const username = usernameInput.value;
+    const validUsernamePattern = /^\w+$/; // Alphanumeric characters and underscores
+
+    if (!validUsernamePattern.test(username)) {
+        warningMessage.style.display = 'block';
+    } else {
+        warningMessage.style.display = 'none';
+    }
+}
+</script>
