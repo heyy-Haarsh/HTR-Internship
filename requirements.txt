@@ -1,0 +1,13 @@
+numpy==1.22.0
+#opencv-contrib-python==4.2.0.32
+tensorflow===2.10.1
+matplotlib
+numpy
+opencv-python
+path
+scikit-learn
+pytest
+pandas
+tqdm
+mltu
+cvtools

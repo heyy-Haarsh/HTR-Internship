@@ -2,6 +2,9 @@ from flask import Flask, request, render_template, redirect, url_for, jsonify, f
 from werkzeug.utils import secure_filename
 import os
 import shutil
+from word_detection import convert_to_text
+
+import re
 import oracledb
 
 app = Flask(__name__)
@@ -44,6 +47,8 @@ def change_profile_photo(username, new_photo_path=None):
 
 @app.route("/")
 def home():
+    if not loggedin_username:
+        return redirect("/convert")
     return render_template("index.html")
 
 @app.route("/about")
@@ -58,14 +63,14 @@ def contact():
 def login(message=None):
     global loggedin_username
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        cursor.execute(f"SELECT * FROM users where usr_name='{username}' AND usr_passwordhash='{password}'")
-        result = cursor.fetchall()
-        if len(result) == 0:
-            return render_template("login.html", message="Invalid login credentials!")
-        loggedin_username = username
-        return redirect("/profile")
+       # getting input with name = fname in HTML form
+       username = request.form.get("username")
+       password = request.form.get("password")
+       cursor.execute(f"SELECT * FROM users where usr_name='{username}' AND usr_passwordhash='{password}'")
+       result = cursor.fetchall()
+       if len(result) == 0:
+           return render_template("login.html", message="Invalid login credentials!")
+       return redirect("/profile")
     
     return render_template("login.html", message=request.args.get('message'))
 
@@ -73,19 +78,26 @@ def login(message=None):
 def signup():
     global loggedin_username
     if request.method == "POST":
+        # Getting input from the form
         username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
-        cursor.execute(f"SELECT * FROM users where usr_name='{username}' OR usr_email='{email}'")
+        
+        # Check if username contains only allowed characters (alphanumeric and underscores)
+        if not re.match(r'^\w+$', username):
+            return render_template("signup.html", invalid_username=True)
+        
+        sql_query = f"SELECT * FROM users WHERE usr_name='{username}' OR usr_email='{email}'"
+        cursor.execute(sql_query)
         result = cursor.fetchall()
         if len(result) == 0:
             cursor.callproc('create_user', [username, email, password])
             conn.commit()
             loggedin_username = username
-            return redirect("/profile")
+            return redirect(url_for("profile"))  # Use url_for to dynamically get the profile route
         else:
             return render_template("signup.html", exists=True)
-    
+
     return render_template("signup.html")
 
 @app.route("/profile", methods=["GET", "POST"])
@@ -120,17 +132,23 @@ def profile():
 def plans():
     return render_template("plans.html")
 
-# @app.route("/convert", methods=["GET", "POST"])
-# def convert():
-#     if request.method == 'POST':
-#         file = request.files['file']
-#         fname = secure_filename(file.filename)
-#         file.save('static/user_uploads/' + fname)
-#         # do the processing here and save the new file in static/
-#         fname_after_processing = 'user_uploads/' + fname
-#         return jsonify({'result_image_location': url_for('static', filename=fname_after_processing)})
-#     return render_template("convert.html")
+@app.route("/convert", methods =["GET", "POST"])
+def convert():
+    if request.method == 'POST':
+        file = request.files['file']
+        fname = secure_filename(file.filename)
+        file.save('static/user_uploads/' + fname)
+        # do the processing here and save the new file in static/
+        img_filename = 'user_uploads/'+fname
+        output_text = convert_to_text('static/'+img_filename)
+        return jsonify({'result_image_location': url_for('static', filename=img_filename),
+                        'output_text': output_text})
+    return render_template("convert.html")
 
-if __name__ == '__main__':
-    app.run(debug=True)
-    app.secret_key = 'your_secret_key'
+@app.route("/forgot")
+def forgot():
+    return render_template("forgot.html")
+
+@app.route("/OTP")
+def OTP():
+    return render_template("OTP.html")
