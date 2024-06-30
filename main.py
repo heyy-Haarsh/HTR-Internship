@@ -17,6 +17,8 @@ cursor = conn.cursor()
 
 @app.route("/")
 def home():
+    if not loggedin_username:
+        return redirect("/convert")
     return render_template("index.html")
 
 @app.route("/about")
@@ -55,7 +57,8 @@ def signup():
         if not re.match(r'^\w+$', username):
             return render_template("signup.html", invalid_username=True)
         
-        cursor.execute("SELECT * FROM users WHERE usr_name=%s OR usr_email=%s", (username, email))
+        sql_query = f"SELECT * FROM users WHERE usr_name='{username}' OR usr_email='{email}'"
+        cursor.execute(sql_query)
         result = cursor.fetchall()
         if len(result) == 0:
             cursor.callproc('create_user', [username, email, password])
