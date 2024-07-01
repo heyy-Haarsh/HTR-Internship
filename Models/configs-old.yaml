@@ -1,0 +1,9 @@
+batch_size: 16
+height: 32
+learning_rate: 0.0005
+max_text_length: 19
+model_path: Models
+train_epochs: 100
+train_workers: 20
+vocab: W3Gx:?EOtP-kHS7nfMC6/Xprq5uDFI4'Kyeoh#.TQ)Ya9b0VAild8(2msw*j,1;BgzLvZc"NUJ!R
+width: 128

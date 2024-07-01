@@ -1,77 +1,80 @@
-	{% with page_title="Inksight" %}
-	{% include "header.html" %}
-	{% endwith %}
+{% with page_title="Inksight" %}
+{% include "header.html" %}
+{% endwith %}
 
-	{% with page_name="home" %}
-	{% include "navbar.html" %}
-	{% endwith %}
+{% with page_name="convert" %}
+{% include "navbar.html" %}
+{% endwith %}
 
-	<style>
-		.card {
-			border-radius: 15px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-			padding: 30px;
-			background-color: #2b2b29dd; /*Tertiary background color */
-		}
+<style>
+	.card {
+		border-radius: 15px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		padding: 30px;
+		background-color: #2b2b29dd;
+		/*Tertiary background color */
+	}
 
-		.feature-line {
-			border-bottom: 2px solid #ff9a9a;
-			margin: 20px auto;
-			max-width: 400px;
-		}
-	</style>
+	.feature-line {
+		border-bottom: 2px solid #ff9a9a;
+		margin: 20px auto;
+		max-width: 400px;
+	}
+</style>
 
-	<div class="container py-4">
-		<div class="row justify-content-center">
-			<!-- First Half: Upload Image -->
-			<div class="col-md-6">
-				<div class="card">
-					<h2 class="text-center mb-4">Convert Images to Text</h2>
-					<div class="feature-line"></div>
-					<img id="upload_img" scr="">
-					<form name="fileupload" method="POST" enctype="multipart/form-data">
-						<div class="mb-3 text-center">
-							<label for="file" class="form-label">Upload an image of handwriting:</label>
-							<input class="form-control" type="file" id="file" name="file" accept="image/*" required>
-						</div>
-						<div class="d-grid gap-2">
-							<button class="btn btn-primary btn-lg" type="submit">Convert to Text</button>
-						</div>
-					</form>
-					<script>
-						var form = document.forms.namedItem("fileupload");
-						form.addEventListener('submit', function(ev) {
-						  var oData = new FormData(form);
-						  var oReq = new XMLHttpRequest();
-						  oReq.open("POST", "{{url_for('convert')}}", true);
-						  oReq.onload = function(oEvent) {
-							if (oReq.status == 200) {
-							  document.getElementById('upload_img').setAttribute('src', JSON.parse(oReq.responseText).result_image_location);
-							} else {
-							  alert("Error " + oReq.status + " occurred when trying to upload your file")
-							}
-						  };
-						  oReq.send(oData);
-						  ev.preventDefault();
-						}, false);
-					</script>
-				</div>
-			</div>
-
-			<!-- Second Half: Converted Output -->
-			<div class="col-md-6">
-				<div class="card">
-					<h2 class="text-center mb-4">Converted Text</h2>
-					<div class="feature-line"></div>
-					<div class="text-center my-4">
-						<p class="lead">Text converted from the uploaded image will appear here.</p>
+<div class="container py-4">
+	<div class="row justify-content-center">
+		<!-- First Half: Upload Image -->
+		<div class="col-md-6">
+			<div class="card">
+				<h2 class="text-center mb-4">Convert Images to Text</h2>
+				<div class="feature-line"></div>
+				<img id="upload_img" scr="">
+				<form name="fileupload" method="POST" enctype="multipart/form-data">
+					<div class="mb-3 text-center">
+						<label for="file" class="form-label">Upload an image of handwriting:</label>
+						<input class="form-control" type="file" id="file" name="file" accept="image/*" required>
 					</div>
 					<div class="d-grid gap-2">
-						<a href="#" class="btn btn-success btn-lg" download>Download Text</a>
+						<button class="btn btn-primary btn-lg" type="submit">Convert to Text</button>
 					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- Second Half: Converted Output -->
+		<div class="col-md-6">
+			<div class="card">
+				<h2 class="text-center mb-4">Converted Text</h2>
+				<div class="feature-line"></div>
+				<div class="text-center my-4">
+					<p class="lead" id="converted_text">Text converted from the uploaded image will appear here.</p>
+				</div>
+				<div class="d-grid gap-2">
+					<a href="#" class="btn btn-success btn-lg" download>Download Text</a>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
+
+<script>
+	var form = document.forms.namedItem("fileupload");
+	form.addEventListener('submit', function(ev) {
+		var oData = new FormData(form);
+		var oReq = new XMLHttpRequest();
+		oReq.open("POST", "{{url_for('convert')}}", true);
+		oReq.onload = function(oEvent) {
+		if (oReq.status == 200) {
+			document.getElementById('upload_img').setAttribute('src', JSON.parse(oReq.responseText).result_image_location);
+			document.getElementById('converted_text').textContent = JSON.parse(oReq.responseText).output_text;
+		} else {
+			alert("Error " + oReq.status + " occurred when trying to upload your file")
+		}
+		};
+		oReq.send(oData);
+		ev.preventDefault();
+	}, false);
+	</script>
 
 	{% include "footer.html" %}

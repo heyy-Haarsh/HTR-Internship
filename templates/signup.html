@@ -12,10 +12,8 @@
             <img src="{{ url_for('static', filename='images/candle_4_5_golden.jpg') }}" alt="Illustration" style="width: 100%" class="rounded-4">
         </div>
         <div class="col-sm-6 p-4 bg-body-secondary rounded-4">
-        {% if exists %}
-            <div class="text-center lead text-danger">That username or email address is already taken!</div>
-        {% elif invalid_username %}
-            <div class="text-center lead text-danger">Username can only contain letters, numbers, and underscores!</div>
+        {% if message %}
+            <div class="text-center lead fs-2">{{message}}</div>
         {% endif %}
         <form class="d-grid gap-2 col-sm-8 mx-auto" action="{{ url_for('signup') }}" method="post">
             <h4 class="display-4 text-center text-primary"><strong>Sign Up</strong></h4>
