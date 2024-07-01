@@ -96,18 +96,6 @@ def logout():
     return redirect('/')
 
 
-
-@app.route("/logout")
-def logout():
-    global loggedin_username
-    # Clear the session variables
-    session.pop('logged_in', None)
-    session.pop('username', None)
-    session.pop('profile_photo_url', None)
-    loggedin_username = ''
-    return redirect(url_for("home"))
-
-
 @app.route("/signup", methods=["GET", "POST"])
 def signup(message=None):
     if request.method == "POST":
