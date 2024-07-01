@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask import Flask, request, render_template, redirect, url_for, jsonify, session
 from werkzeug.utils import secure_filename
 import os
 import re
@@ -6,6 +6,7 @@ import re
 import oracledb
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 result = ''
 loggedin_username = ''
 
@@ -25,20 +26,48 @@ def about():
 def contact():
     return render_template("contact.html")
 
-@app.route("/login", methods =["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login(message=None):
     global loggedin_username
     if request.method == "POST":
-       # getting input with name = fname in HTML form
-       username = request.form.get("username")
-       password = request.form.get("password")
-       cursor.execute(f"SELECT * FROM users where usr_name='{username}' AND usr_passwordhash='{password}'")
-       result = cursor.fetchall()
-       if len(result) == 0:
-           return render_template("login.html", message="Invalid login credentials!")
-       return redirect("/profile")
-    
+        # Getting input from the form
+        username = request.form.get("username")
+        password = request.form.get("password")
+
+        # Using named placeholders for Oracle
+        cursor.execute("SELECT * FROM users WHERE usr_name=:username AND usr_passwordhash=:password", {"username": username, "password": password})
+        result = cursor.fetchall()
+
+        if len(result) == 0:
+            return render_template("login.html", message="Invalid login credentials!")
+
+        # Assuming result[0] contains the user information
+        # Access elements of the tuple correctly
+        user = result[0]  # Access the first row (assuming only one row matches)
+        # Replace with the actual field names from your database
+        profile_photo_url = user[2]  # Example: user[2] is the third field in the result tuple
+
+        # Set session variables
+        session['logged_in'] = True
+        session['username'] = username
+        session['profile_photo_url'] = profile_photo_url
+
+        loggedin_username = username
+        return redirect(url_for("profile"))
+
     return render_template("login.html", message=request.args.get('message'))
+
+
+@app.route("/logout")
+def logout():
+    global loggedin_username
+    # Clear the session variables
+    session.pop('logged_in', None)
+    session.pop('username', None)
+    session.pop('profile_photo_url', None)
+    loggedin_username = ''
+    return redirect(url_for("home"))
+
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -53,7 +82,8 @@ def signup():
         if not re.match(r'^\w+$', username):
             return render_template("signup.html", invalid_username=True)
         
-        cursor.execute("SELECT * FROM users WHERE usr_name=%s OR usr_email=%s", (username, email))
+        # Use named placeholders for Oracle
+        cursor.execute("SELECT * FROM users WHERE usr_name=:username OR usr_email=:email", {"username": username, "email": email})
         result = cursor.fetchall()
         if len(result) == 0:
             cursor.callproc('create_user', [username, email, password])
@@ -64,7 +94,6 @@ def signup():
             return render_template("signup.html", exists=True)
 
     return render_template("signup.html")
-
 
 @app.route("/profile")
 def profile():
