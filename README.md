@@ -29,5 +29,3 @@ To support the development of the recognition model, a custom dataset was curate
 * **Containerization:** Docker
 
 ---
-
-Would you like me to refine any of these sections, or are there specific technical details you would like to expand upon?
